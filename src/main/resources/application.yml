@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: openrouter-chat-backend
+  profiles:
+    default: local
+
+server:
+  port: ${SERVER_PORT:8080}
+
+openrouter:
+  base-url: ${OPENROUTER_BASE_URL:https://openrouter.ai/api/v1}
+  api-key: ${OPENROUTER_API_KEY:}
+  default-model: ${OPENROUTER_MODEL:openai/gpt-4o-mini}
+  http-referer: ${OPENROUTER_HTTP_REFERER:http://localhost:8080}
+  app-title: ${OPENROUTER_APP_TITLE:Spring OpenRouter Chat Backend}
+  timeout: ${OPENROUTER_TIMEOUT:30s}
+  max-retries: ${OPENROUTER_MAX_RETRIES:2}
+  retry-backoff: ${OPENROUTER_RETRY_BACKOFF:500ms}
+  max-context-messages: ${OPENROUTER_MAX_CONTEXT_MESSAGES:20}
+
+chat:
+  rate-limit:
+    requests-per-minute: ${CHAT_REQUESTS_PER_MINUTE:30}
+  prompt:
+    max-length: ${CHAT_PROMPT_MAX_LENGTH:12000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
