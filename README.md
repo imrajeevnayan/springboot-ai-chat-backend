@@ -4,6 +4,16 @@ Production-style backend for a ChatGPT-like chat system built with Java 21, Spri
 
 Repository: [https://github.com/imrajeevnayan/springboot-ai-chat-backend.git](https://github.com/imrajeevnayan/springboot-ai-chat-backend.git)
 
+## Screenshots
+
+### Chat UI
+
+![AI Chat Operations Console](images/ChatUi.png)
+
+### Postman API Response
+
+![Postman API response](images/postman-response.png)
+
 ## Why This Project Matters
 
 This project demonstrates backend engineering skills that are directly useful in real-world AI products:
