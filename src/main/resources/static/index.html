@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Operations Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"Space Grotesk"', 'sans-serif'],
+              body: ['"IBM Plex Sans"', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell min-h-screen font-body">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">OpenRouter</p>
+            <h1 class="font-display text-2xl font-bold leading-none">Chat Ops</h1>
+          </div>
+        </div>
+
+        <section class="control-panel" aria-labelledby="session-title">
+          <div class="section-head">
+            <h2 id="session-title">Session</h2>
+            <button id="healthButton" class="icon-button" type="button" title="Check API health" aria-label="Check API health">
+              <i data-lucide="activity"></i>
+            </button>
+          </div>
+
+          <label class="field-label" for="apiBase">API base</label>
+          <input id="apiBase" class="field-input" type="url" placeholder="http://localhost:8080" />
+
+          <label class="field-label" for="userId">User ID</label>
+          <input id="userId" class="field-input" type="text" placeholder="user-1" />
+
+          <label class="field-label" for="model">Model</label>
+          <input id="model" class="field-input" type="text" placeholder="openai/gpt-4o-mini" />
+
+          <div class="status-line" id="healthStatus">
+            <span class="status-dot"></span>
+            <span>Waiting for API</span>
+          </div>
+        </section>
+
+        <section class="conversation-panel" aria-labelledby="conversations-title">
+          <div class="section-head">
+            <h2 id="conversations-title">Conversations</h2>
+            <div class="toolbar">
+              <button id="refreshButton" class="icon-button" type="button" title="Refresh conversations" aria-label="Refresh conversations">
+                <i data-lucide="refresh-cw"></i>
+              </button>
+              <button id="newChatButton" class="icon-button" type="button" title="New conversation" aria-label="New conversation">
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+          </div>
+          <div id="conversationList" class="conversation-list" aria-live="polite"></div>
+        </section>
+      </aside>
+
+      <main class="main-console">
+        <header class="console-header">
+          <div>
+            <p class="eyebrow">Layered Spring Boot backend</p>
+            <h2 id="activeTitle" class="font-display text-3xl font-bold">New conversation</h2>
+          </div>
+          <div class="header-actions">
+            <button id="deleteButton" class="secondary-button" type="button">
+              <i data-lucide="trash-2"></i>
+              <span>Delete</span>
+            </button>
+          </div>
+        </header>
+
+        <section id="messageStream" class="message-stream" aria-live="polite"></section>
+
+        <form id="chatForm" class="composer">
+          <label class="sr-only" for="promptInput">Message</label>
+          <textarea id="promptInput" rows="4" placeholder="Ask the backend to explain, design, summarize, or debug..." required></textarea>
+          <div class="composer-footer">
+            <div class="request-meter">
+              <span id="charCount">0</span>
+              <span>/ 12000</span>
+            </div>
+            <button id="sendButton" class="primary-button" type="submit">
+              <i data-lucide="send-horizontal"></i>
+              <span>Send</span>
+            </button>
+          </div>
+        </form>
+      </main>
+
+      <aside class="inspector">
+        <section class="metric-card">
+          <p class="eyebrow">Backend surface</p>
+          <div class="metric-grid">
+            <div>
+              <span class="metric-value">REST</span>
+              <span class="metric-label">API</span>
+            </div>
+            <div>
+              <span class="metric-value">JPA</span>
+              <span class="metric-label">Persistence</span>
+            </div>
+            <div>
+              <span class="metric-value">H2</span>
+              <span class="metric-label">Local DB</span>
+            </div>
+            <div>
+              <span class="metric-value">LLM</span>
+              <span class="metric-label">OpenRouter</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="trace-card">
+          <p class="eyebrow">Request flow</p>
+          <ol class="trace-list">
+            <li><span>01</span>Controller validates DTO</li>
+            <li><span>02</span>Service builds context</li>
+            <li><span>03</span>Repository stores messages</li>
+            <li><span>04</span>OpenRouter returns response</li>
+          </ol>
+        </section>
+
+        <section class="response-card" aria-labelledby="last-response-title">
+          <div class="section-head">
+            <h2 id="last-response-title">Last response</h2>
+            <span id="lastStatus" class="status-pill">idle</span>
+          </div>
+          <pre id="lastResponse">{}</pre>
+        </section>
+      </aside>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
