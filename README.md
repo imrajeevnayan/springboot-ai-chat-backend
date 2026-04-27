@@ -222,6 +222,29 @@ Expected response:
 }
 ```
 
+## Run With Docker
+
+Build the image:
+
+```powershell
+docker build -t springboot-ai-chat-backend .
+```
+
+Run the container:
+
+```powershell
+docker run --rm -p 8080:8080 `
+  -e OPENROUTER_API_KEY="your_openrouter_api_key_here" `
+  -v ${PWD}/data:/app/data `
+  springboot-ai-chat-backend
+```
+
+Open:
+
+```text
+http://localhost:8080
+```
+
 ## H2 Database
 
 The default local profile uses file-backed H2:

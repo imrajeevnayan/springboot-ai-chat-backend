@@ -1,0 +1,10 @@
+.git
+.vscode
+.idea
+target
+data
+*.log
+*.iml
+README.md
+ARCHITECTURE.md
+images
